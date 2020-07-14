@@ -2,76 +2,80 @@
 <html>
 
 <head>
-    <title>LED Controller</title>
+    <title>LED Music Visualizer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png"
-        href="https://cdn0.iconfinder.com/data/icons/huge-business-vector-icons/60/music_notes-512.png" />
+        href="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT3zsWtdTu_bc9aFPB724dLVg9RtkCMFt9Pew&usqp=CAU" />
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 </head>
 
 <body>
 
-    <h1>
-        RPi LED Controller
-    </h1>
+    <div id="banner">
+        LED Music Visualizer
+    </div>
 
-    <button onclick="resetSettings()">
-        <p>Reset</p>
-    </button>
-    <p><input id="power" class="checkbox" type="checkbox" oninput="togglePower(this.checked)">Power</p>
-    <div id="all_settings">
-        <p>Color <button onclick="handleAddColor()">+</button></p>
-        <ul id="color_list" style="list-style: none; padding: 0; margin: 0;"></ul>
-        <p>Saturation</p><input id="saturation" class="slider" type="range" min="0" max="100"
-            oninput="updateSaturation(parseFloat(this.value/100))">
-        <p>Value</p><input id="value" class="slider" type="range" min="0" max="100"
-            oninput="updateValue(parseFloat(this.value/100))">
-        <p>Boundary</p><input id="boundary" class="slider" type="range" min="0" max="1"
-            oninput="updateBoundary(parseInt(this.value))">
-        <p>Arrangement</p><input id="arrangement" class="slider" type="range" min="0" max="1"
-            oninput="updateArrangement(parseInt(this.value))">
-        <p>Speed</p><input id="speed" class="slider" type="range" min="0" max="100"
-            oninput="updateSpeed(parseFloat(this.value/100))">
-        <p>Direction</p><input id="direction" class="slider" type="range" min="-1" max="1"
-            oninput="updateDirection(parseInt(this.value))">
-        <p>Position</p><input id="pos" class="slider" type="range" min="0" max="100"
-            oninput="updatePos(parseFloat(this.value/100))">
+    <div id="body_container">
+        <button class="button-2" onclick="resetSettings()">
+            <p>RESET</p>
+        </button>
+        <p>Presets <button class="button-1" onclick="handleAddPreset()">+</button></p>
+        <div id="presets_list"></div>
+        <p><input id="power" class="checkbox" type="checkbox" oninput="togglePower(this.checked)">Power</p>
+        <div id="all_settings">
+            <p>Color <button class="button-1" onclick="handleAddColor()">+</button></p>
+            <ul id="color_list" style="list-style: none; padding: 0; margin: 0;"></ul>
+            <p>Saturation</p><input id="saturation" class="slider" type="range" min="0" max="100"
+                oninput="updateSaturation(parseFloat(this.value/100))">
+            <p>Value</p><input id="value" class="slider" type="range" min="0" max="100"
+                oninput="updateValue(parseFloat(this.value/100))">
+            <p>Boundary</p><input id="boundary" class="slider" type="range" min="0" max="1"
+                oninput="updateBoundary(parseInt(this.value))">
+            <p>Arrangement</p><input id="arrangement" class="slider" type="range" min="0" max="1"
+                oninput="updateArrangement(parseInt(this.value))">
+            <p>Speed</p><input id="speed" class="slider" type="range" min="0" max="100"
+                oninput="updateSpeed(parseFloat(this.value/100))">
+            <p>Direction</p><input id="direction" class="slider" type="range" min="-1" max="1"
+                oninput="updateDirection(parseInt(this.value))">
+            <p>Position</p><input id="pos" class="slider" type="range" min="0" max="100"
+                oninput="updatePos(parseFloat(this.value/100))">
 
-        <p><input id="history_enable" class="checkbox" type="checkbox"
-                oninput="toggleHistorySettings(this.checked)">History Animation
-        </p>
-        <div id="history_settings">
-            <p class="sub_setting">Speed</p><input id="history_speed" class="slider" type="range" min="1" max="10"
-                oninput="updateHistorySpeed(parseInt(this.value))">
-            <p class="sub_setting">Position</p><input id="history_pos" class="slider" type="range" min="0" max="100"
-                oninput="updateHistoryPos(parseFloat(this.value/100))">
-        </div>
-
-        <p><input id="music_settings_toggle" class="checkbox" type="checkbox"
-                oninput="toggleMusicSettings(this.checked)">Music Sync</p>
-        <div id="music_settings">
-            <p class="sub_setting">Smoothing (samples)</p><input id="music_smooth" class="slider" type="range" min="1"
-                max="20" oninput="updateMusicSmooth(parseInt(this.value))">
-            <p class="sub_setting">Calib. Window (sec)</p><input id="music_calibration_sec" class="slider" type="range"
-                min="1" max="20" oninput="updateMusicCalibrationSec(parseInt(this.value))">
-
-            <p><input id="music_brightness_enable" class="checkbox" type="checkbox"
-                    oninput="toggleMusicBrightness(this.checked)">Music Sync: Brightness</p>
-            <div id="music_brightness_settings">
-                <p class="sub_setting">Brightness Min</p><input id="music_brightness_min" class="slider" type="range"
-                    min="0" max="100" oninput="updateMusicBrightnessMin(parseFloat(this.value/100))">
-                <p class="sub_setting">Brightness Max</p><input id="music_brightness_max" class="slider" type="range"
-                    min="0" max="100" oninput="updateMusicBrightnessMax(parseFloat(this.value/100))">
+            <p><input id="history_enable" class="checkbox" type="checkbox"
+                    oninput="toggleHistorySettings(this.checked)">History Animation
+            </p>
+            <div id="history_settings">
+                <p class="sub_setting">Speed</p><input id="history_speed" class="slider" type="range" min="1" max="10"
+                    oninput="updateHistorySpeed(parseInt(this.value))">
+                <p class="sub_setting">Position</p><input id="history_pos" class="slider" type="range" min="0" max="100"
+                    oninput="updateHistoryPos(parseFloat(this.value/100))">
             </div>
 
-            <p><input id="music_color_enable" class="checkbox" type="checkbox"
-                    oninput="toggleMusicColor(this.checked)">Music Sync: Color</p>
-            <div id="music_color_settings">
-                <p class="sub_setting">Color Switch Debounce (samples)</p><input id="music_color_debounce"
-                    class="slider" type="range" min="0" max="20"
-                    oninput="updateMusicColorDebounce(parseInt(this.value))">
-                <p class="sub_setting">Color Switch Threshold</p><input id="music_color_thresh" class="slider"
-                    type="range" min="0" max="100" oninput="updateMusicColorThresh(parseFloat(this.value/100))">
+            <p><input id="music_settings_toggle" class="checkbox" type="checkbox"
+                    oninput="toggleMusicSettings(this.checked)">Music Sync</p>
+            <div id="music_settings">
+                <p class="sub_setting">Smoothing (samples)</p><input id="music_smooth" class="slider" type="range"
+                    min="1" max="20" oninput="updateMusicSmooth(parseInt(this.value))">
+                <p class="sub_setting">Calib. Window (sec)</p><input id="music_calibration_sec" class="slider"
+                    type="range" min="1" max="20" oninput="updateMusicCalibrationSec(parseInt(this.value))">
+
+                <p><input id="music_brightness_enable" class="checkbox" type="checkbox"
+                        oninput="toggleMusicBrightness(this.checked)">Music Sync: Brightness</p>
+                <div id="music_brightness_settings">
+                    <p class="sub_setting">Brightness Min</p><input id="music_brightness_min" class="slider"
+                        type="range" min="0" max="100" oninput="updateMusicBrightnessMin(parseFloat(this.value/100))">
+                    <p class="sub_setting">Brightness Max</p><input id="music_brightness_max" class="slider"
+                        type="range" min="0" max="100" oninput="updateMusicBrightnessMax(parseFloat(this.value/100))">
+                </div>
+
+                <p><input id="music_color_enable" class="checkbox" type="checkbox"
+                        oninput="toggleMusicColor(this.checked)">Music Sync: Color</p>
+                <div id="music_color_settings">
+                    <p class="sub_setting">Color Switch Debounce (samples)</p><input id="music_color_debounce"
+                        class="slider" type="range" min="0" max="20"
+                        oninput="updateMusicColorDebounce(parseInt(this.value))">
+                    <p class="sub_setting">Color Switch Threshold</p><input id="music_color_thresh" class="slider"
+                        type="range" min="0" max="100" oninput="updateMusicColorThresh(parseFloat(this.value/100))">
+                </div>
             </div>
         </div>
     </div>
@@ -79,7 +83,6 @@
 </body>
 
 </html>
-<!-- TODO Add RESET button -->
 
 <script>
 
@@ -172,6 +175,12 @@
         musicEnabled = settings["music_brightness_enable"] || settings["music_color_enable"];
         document.getElementById("music_settings_toggle").checked = musicEnabled;
         toggleMusicSettings(musicEnabled, false);
+
+        // presets
+        document.getElementById("presets_list").innerHTML = ""; // remove all children
+        for (i = 0; i < settings["presets"].length; i++) {
+            addPresetElement(settings["presets"][i]);
+        }
 
         // color
         document.getElementById("color_list").innerHTML = ""; // remove all children
@@ -337,6 +346,7 @@
         var removeButton = document.createElement("button");
         removeButton.style.display = "block";
         removeButton.appendChild(document.createTextNode("-"));
+        removeButton.className = "button-1";
         removeButton.onclick = function () { handleRemoveColor(colorList, removeButton); }
 
         var colorListItem = document.createElement("li");
@@ -365,6 +375,68 @@
             colors.push(RGBtoHSV(HEXtoRGB(colorInput.value)))
         }
         updateColors(colors)
+    }
+
+    // preset
+
+    function addPresetElement(presetName) {
+        var presetsList = document.getElementById("presets_list");
+
+        var presetItem = document.createElement("p");
+
+        var loadButton = document.createElement("button");
+        loadButton.appendChild(document.createTextNode("LOAD"));
+        loadButton.className = "button-2";
+        loadButton.onclick = function () { handleLoadPreset(presetName); }
+
+        var saveButton = document.createElement("button");
+        saveButton.appendChild(document.createTextNode("SAVE"));
+        saveButton.className = "button-2";
+        saveButton.onclick = function () { handleSavePreset(presetName); }
+
+        var removeButton = document.createElement("button");
+        removeButton.appendChild(document.createTextNode("-"));
+        removeButton.style.marginRight = "10px";
+        removeButton.className = "button-1";
+        removeButton.onclick = function () { handleRemovePreset(presetsList, presetItem, presetName); }
+
+        var presetNameNode = document.createTextNode(presetName);
+
+        presetItem.appendChild(loadButton);
+        presetItem.appendChild(saveButton);
+        presetItem.appendChild(removeButton);
+        presetItem.appendChild(presetNameNode);
+
+        presetsList.appendChild(presetItem);
+    }
+
+    // unused rip
+    function removePresetElement(presetsList, presetItem) {
+        presetsList.removeChild(presetItem);
+    }
+
+    function handleAddPreset() {
+        // TODO: make a nice popup
+        var presetName = prompt("Enter unique preset name:");
+        if (presetName == null) {
+            return;
+        }
+        updateSettings({ "add_preset": presetName });
+        getSettings();
+    }
+
+    function handleLoadPreset(presetName) {
+        updateSettings({ "load_preset": presetName });
+        getSettings();
+    }
+
+    function handleSavePreset(presetName) {
+        updateSettings({ "save_preset": presetName });
+    }
+
+    function handleRemovePreset(presetList, presetItem, presetName) {
+        updateSettings({ "remove_preset": presetName });
+        getSettings();
     }
 
 
@@ -455,16 +527,91 @@
 </script>
 
 <style>
+    /*  Greys:
+        #121212 - title fill
+        #212121 - background
+        #424242 - button fill
+        #9e9e9e - slider fill
+        #EEEEEE - text
+
+        Blue:
+        #3282b8
+     */
+
+    :root {
+        --dark-grey-1: #121212;
+        --dark-grey-2: #212121;
+        --mid-grey-1: #424242;
+        --mid-grey-2: #9e9e9e;
+        --light-grey-1: #E0E0E0;
+        --light-grey-2: #F5F5F5;
+
+        --dark-accent-1: #102A43;
+        --dark-accent-2: #243B53;
+        --mid-accent-1: #486581;
+        --mid-accent-2: #627D98;
+        --light-accent-1: #829AB1;
+        --light-accent-2: #9FB3C8;
+        /* 0.125 */
+        --light-accent-2-fade: #9eb2c720;
+
+
+
+
+
+        --banner-fill: var(--dark-grey-1);
+        --banner-text: var(--light-accent-2);
+
+        --background-fill: var(--dark-grey-2);
+        --text: var(--light-grey-1);
+
+
+        --button-2-fill: var(--light-accent-2-fade);
+        --button-2-text: var(--light-accent-2);
+        --button-2-border: var(--light-accent-2);
+
+        --button-1-fill: var(--light-accent-2);
+        --button-1-text: var(--dark-grey-2);
+        --button-1-border: var(--light-accent-2);
+
+        --slider-fill: var(--mid-grey-1);
+        --slider-thumb: var(--light-accent-2);
+
+        --checkbox-off-fill: var(--light-accent-2-fade);
+        --checkbox-off-border: var(--light-accent-2);
+        --checkbox-on-fill: var(--light-accent-2);
+        --checkbox-on-border: var(--light-accent-2);
+
+        --presets-border: var(--mid-grey-1);
+        --presets-fill: var(--dark-grey-2);
+    }
+
+
     body {
-        background-color: #212121;
-        color: #EEEEEE;
+        background-color: var(--background-fill);
+        color: var(--text);
         font-family: "Roboto";
+        margin: 0px;
+    }
+
+    #banner {
+        background-color: var(--banner-fill);
+        color: var(--banner-text);
+        text-align: center;
+        font-size: 30px;
+        padding: 25px;
+    }
+
+    #body_container {
+        margin: 8px;
+        padding: 0px;
     }
 
     p {
         font-size: 20px;
-        margin-bottom: 7px;
-        margin-top: 10px;
+        padding-bottom: 7px;
+        padding-top: 15px;
+        margin: 0px;
     }
 
     .sub_setting {
@@ -473,15 +620,15 @@
     }
 
     div {
-        padding-left: 25px;
+        padding: 0px 30px;
     }
 
     .slider {
         -webkit-appearance: none;
-        height: 20px;
+        height: 8px;
         width: 250px;
         border-radius: 10px;
-        background: #9E9E9E;
+        background: var(--slider-fill);
     }
 
     .slider::-webkit-slider-thumb {
@@ -491,34 +638,49 @@
         height: 30px;
         border-radius: 50%;
         border: none;
-        background: #3282b8;
+        background: var(--slider-thumb);
         cursor: pointer;
     }
 
-    button {
-        background-color: #424242;
-        border: none;
-        color: #E0E0E0;
-        padding: 2px 14px;
+    button,
+    .button-1 {
+        background-color: var(--button-1-fill);
+        border: var(--button-1-border) 1px solid;
+        color: var(--button-1-text);
+        padding: 4px 13px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 22px;
+        font-size: 18px;
         border-radius: 5px;
     }
 
+    .button-2 {
+        background-color: var(--button-2-fill);
+        border: var(--button-2-border) 1px solid;
+        color: var(--button-2-text);
+    }
+
     button p {
-        margin: 5px 10px;
+        padding: 0;
+        margin: 9px 15px;
+        font-size: 15px;
+    }
+
+    button:active,
+    button:focus {
+        box-shadow: none;
+        outline: 0;
     }
 
     .checkbox {
         -webkit-appearance: none;
-        background-color: #424242;
-        border: 2px solid #9e9e9e;
+        background-color: var(--checkbox-off-fill);
+        border: 1px solid var(--checkbox-off-border);
         padding: 10px;
-        border-radius: 50%;
+        border-radius: 35%;
         margin: 0px;
-        margin-right: 10px;
+        margin-right: 8px;
     }
 
     .checkbox:active,
@@ -530,7 +692,32 @@
     }
 
     .checkbox:checked {
-        background-color: #3282b8;
-        border-color: #E0E0E0;
+        background-color: var(--checkbox-on-fill);
+        border: 1px solid var(--checkbox-on-border);
+    }
+
+    #presets_list {
+        padding: 5px 5px;
+        max-height: 132px;
+        width: 95%;
+        max-width: 500px;
+        overflow-y: scroll;
+        display: inline-block;
+        border: var(--presets-border) 1px solid;
+        border-radius: 5px;
+        background-color: var(--presets-fill);
+    }
+
+    #presets_list p {
+        padding: 5px 2px;
+        font-size: 17px;
+        font-style: italic;
+    }
+
+    #presets_list p button {
+        font-style: normal;
+        margin: 0px 3px;
+        font-size: 13px;
+        padding: 8px 18px;
     }
 </style>

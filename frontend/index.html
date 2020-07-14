@@ -44,10 +44,12 @@
                     oninput="toggleHistorySettings(this.checked)">History Animation
             </p>
             <div id="history_settings">
-                <p class="sub_setting">Speed</p><input id="history_speed" class="slider" type="range" min="1" max="10"
-                    oninput="updateHistorySpeed(parseInt(this.value))">
-                <p class="sub_setting">Position</p><input id="history_pos" class="slider" type="range" min="0" max="100"
-                    oninput="updateHistoryPos(parseFloat(this.value/100))">
+                <p class="sub_setting">Playback Speed</p><input id="history_speed" class="slider" type="range" min="1"
+                    max="10" oninput="updateHistorySpeed(parseInt(this.value))">
+                <p class="sub_setting">Position of Origin</p><input id="history_pos" class="slider" type="range" min="0"
+                    max="100" oninput="updateHistoryPos(parseFloat(this.value/100))">
+                <p class="sub_setting">Size of Origin</p><input id="history_size" class="slider" type="range" min="0"
+                    max="100" oninput="updateHistorySize(parseFloat(this.value/100))">
             </div>
 
             <p><input id="music_settings_toggle" class="checkbox" type="checkbox"
@@ -199,6 +201,7 @@
         document.getElementById("pos").value = settings["pos"] * 100;
         document.getElementById("history_speed").value = settings["history_speed"]
         document.getElementById("history_pos").value = parseInt(settings["history_pos"] * 100);
+        document.getElementById("history_size").value = parseInt(settings["history_size"] * 100);
         document.getElementById("music_smooth").value = settings["music_smooth"];
         document.getElementById("music_calibration_sec").value = settings["music_calibration_sec"];
         document.getElementById("music_brightness_min").value = parseInt(settings["music_brightness_min"] * 100);
@@ -270,8 +273,12 @@
         updateSettings({ "history_speed": s });
     }
 
-    function updateHistoryPos(d) {
-        updateSettings({ "history_pos": d });
+    function updateHistoryPos(p) {
+        updateSettings({ "history_pos": p });
+    }
+
+    function updateHistorySize(s) {
+        updateSettings({ "history_size": s });
     }
 
     function updateMusicSmooth(s) {

@@ -153,6 +153,8 @@ class MusicVis:
                 self.debounce -= 1
 
             if music_brightness_enable:
+                if music_brightness_max < music_brightness_min:
+                    music_brightness_max = music_brightness_min
                 adjusted_amp = amp*(music_brightness_max - music_brightness_min) + music_brightness_min
                 saturation, value = amp_to_saturation_value(adjusted_amp)
                 self.strip.update_settings({"music_saturation":saturation, "music_value":value})

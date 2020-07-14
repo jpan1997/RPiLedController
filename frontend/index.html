@@ -37,14 +37,14 @@
             <p>Arrangement: <span class="slider_label" id="arrangement_label"></span class="slider_label"></p><input
                 id="arrangement" class="slider" type="range" min="0" max="1"
                 oninput="updateArrangement(parseInt(this.value));updateSliderLabel('arrangement_label', this.value)">
-            <p>Speed: <span class="slider_label" id="speed_label"></span class="slider_label"></p><input id="speed"
-                class="slider" type="range" min="0" max="100"
+            <p>Animation Speed: <span class="slider_label" id="speed_label"></span class="slider_label"></p><input
+                id="speed" class="slider" type="range" min="0" max="100"
                 oninput="updateSpeed(parseFloat(this.value/100));updateSliderLabel('speed_label', this.value)">
-            <p>Direction: <span class="slider_label" id="direction_label"></span class="slider_label"></p><input
-                id="direction" class="slider" type="range" min="-1" max="1"
+            <p>Animation Direction: <span class="slider_label" id="direction_label"></span class="slider_label"></p>
+            <input id="direction" class="slider" type="range" min="-1" max="1"
                 oninput="updateDirection(parseInt(this.value));updateSliderLabel('direction_label', this.value)">
-            <p>Position: <span class="slider_label" id="pos_label"></span class="slider_label"></p><input id="pos"
-                class="slider" type="range" min="0" max="100"
+            <p>Animation Position: <span class="slider_label" id="pos_label"></span class="slider_label"></p><input
+                id="pos" class="slider" type="range" min="0" max="100"
                 oninput="updatePos(parseFloat(this.value/100));updateSliderLabel('pos_label', this.value)">
 
             <p><input id="history_enable" class="checkbox" type="checkbox"
@@ -369,6 +369,37 @@
     }
 
     function updateSliderLabel(labelId, value) {
+        // boundary
+        if (labelId == "boundary_label") {
+            if (value == 0) {
+                value = "FADE";
+            } else if (value == 1) {
+                value = "NO FADE";
+            }
+        }
+
+        // arrangement
+        if (labelId == "arrangement_label") {
+            if (value == 0) {
+                value = "SOLID";
+            } else if (value == 1) {
+                value = "SEGMENT";
+            }
+        }
+
+        // direction
+        if (labelId == "direction_label") {
+            if (value == -1) {
+                value = "BACKWARD";
+            } else if (value == 0) {
+                value = "STOPPED";
+            } else if (value == 1) {
+                value = "FORWARD";
+            }
+        }
+
+
+
         document.getElementById(labelId).innerHTML = value;
     }
 

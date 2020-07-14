@@ -149,6 +149,7 @@ class Strip:
             history_enable = self.history_enable
             history_speed = self.history_speed
             history_pos = self.history_pos
+            history_size = self.history_size
 
 
         # Default to black when no colors present
@@ -168,7 +169,7 @@ class Strip:
                 fade_percentage = section_float % 1
                 color = color_fade(color_pair[0], color_pair[1], fade_percentage)
 
-        offset = int(1.0 * pos * self.strip.numPixels()) # TODO: Pull logic out
+        offset = int(1.0 * pos * self.strip.numPixels())
         for i in range(self.strip.numPixels()):
 
             # ARRANGEMENT
@@ -190,9 +191,22 @@ class Strip:
 
             pixel = hsv_to_color(adjust_color(color, saturation, value))
 
+            # HISTORY
             if history_enable:
-                left_pixels = self.pixels[:int(len(self.pixels)*history_pos)]
-                right_pixels = self.pixels[int(len(self.pixels)*history_pos):]
+                left_boundary = int(self.strip.numPixels()*(history_pos - history_size))
+                right_boundary = int(self.strip.numPixels()*(history_pos + history_size))
+
+                if left_boundary < 0:
+                    left_boundary = 0
+                if right_boundary > self.strip.numPixels():
+                    right_boundary = self.strip.numPixels()
+
+                left_pixels = self.pixels[:left_boundary]
+                middle_pixels = self.pixels[left_boundary:right_boundary]
+                right_pixels = self.pixels[right_boundary:]
+
+                for i in range(len(middle_pixels)):
+                    middle_pixels[i] = pixel
 
                 for i in range(history_speed):
                     if len(left_pixels) > 0:
@@ -202,7 +216,7 @@ class Strip:
                         right_pixels.pop(-1)
                         right_pixels.insert(0, pixel)
 
-                self.pixels = left_pixels + right_pixels
+                self.pixels = left_pixels + middle_pixels + right_pixels
                 break
             else:
                 self.pixels[i] = pixel

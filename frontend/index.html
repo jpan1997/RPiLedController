@@ -25,58 +25,78 @@
         <div id="all_settings">
             <p>Color <button class="button-1" onclick="handleAddColor()">+</button></p>
             <ul id="color_list" style="list-style: none; padding: 0; margin: 0;"></ul>
-            <p>Saturation</p><input id="saturation" class="slider" type="range" min="0" max="100"
-                oninput="updateSaturation(parseFloat(this.value/100))">
-            <p>Value</p><input id="value" class="slider" type="range" min="0" max="100"
-                oninput="updateValue(parseFloat(this.value/100))">
-            <p>Boundary</p><input id="boundary" class="slider" type="range" min="0" max="1"
-                oninput="updateBoundary(parseInt(this.value))">
-            <p>Arrangement</p><input id="arrangement" class="slider" type="range" min="0" max="1"
-                oninput="updateArrangement(parseInt(this.value))">
-            <p>Speed</p><input id="speed" class="slider" type="range" min="0" max="100"
-                oninput="updateSpeed(parseFloat(this.value/100))">
-            <p>Direction</p><input id="direction" class="slider" type="range" min="-1" max="1"
-                oninput="updateDirection(parseInt(this.value))">
-            <p>Position</p><input id="pos" class="slider" type="range" min="0" max="100"
-                oninput="updatePos(parseFloat(this.value/100))">
+            <p>Saturation: <span class="slider_label" id="saturation_label"></span class="slider_label"></p><input
+                id="saturation" class="slider" type="range" min="0" max="100"
+                oninput="updateSaturation(parseFloat(this.value/100));updateSliderLabel('saturation_label', this.value)">
+            <p>Value: <span class="slider_label" id="value_label"></span class="slider_label"></p><input id="value"
+                class="slider" type="range" min="0" max="100"
+                oninput="updateValue(parseFloat(this.value/100));updateSliderLabel('value_label', this.value)">
+            <p>Boundary: <span class="slider_label" id="boundary_label"></span class="slider_label"></p><input
+                id="boundary" class="slider" type="range" min="0" max="1"
+                oninput="updateBoundary(parseInt(this.value));updateSliderLabel('boundary_label', this.value)">
+            <p>Arrangement: <span class="slider_label" id="arrangement_label"></span class="slider_label"></p><input
+                id="arrangement" class="slider" type="range" min="0" max="1"
+                oninput="updateArrangement(parseInt(this.value));updateSliderLabel('arrangement_label', this.value)">
+            <p>Speed: <span class="slider_label" id="speed_label"></span class="slider_label"></p><input id="speed"
+                class="slider" type="range" min="0" max="100"
+                oninput="updateSpeed(parseFloat(this.value/100));updateSliderLabel('speed_label', this.value)">
+            <p>Direction: <span class="slider_label" id="direction_label"></span class="slider_label"></p><input
+                id="direction" class="slider" type="range" min="-1" max="1"
+                oninput="updateDirection(parseInt(this.value));updateSliderLabel('direction_label', this.value)">
+            <p>Position: <span class="slider_label" id="pos_label"></span class="slider_label"></p><input id="pos"
+                class="slider" type="range" min="0" max="100"
+                oninput="updatePos(parseFloat(this.value/100));updateSliderLabel('pos_label', this.value)">
 
             <p><input id="history_enable" class="checkbox" type="checkbox"
                     oninput="toggleHistorySettings(this.checked)">History Animation
             </p>
             <div id="history_settings">
-                <p class="sub_setting">Playback Speed</p><input id="history_speed" class="slider" type="range" min="1"
-                    max="10" oninput="updateHistorySpeed(parseInt(this.value))">
-                <p class="sub_setting">Position of Origin</p><input id="history_pos" class="slider" type="range" min="0"
-                    max="100" oninput="updateHistoryPos(parseFloat(this.value/100))">
-                <p class="sub_setting">Size of Origin</p><input id="history_size" class="slider" type="range" min="0"
-                    max="100" oninput="updateHistorySize(parseFloat(this.value/100))">
+                <p class="sub_setting">Playback Speed: <span class="slider_label" id="history_speed_label"></span
+                        class="slider_label"></p><input id="history_speed" class="slider" type="range" min="1" max="10"
+                    oninput="updateHistorySpeed(parseInt(this.value));updateSliderLabel('history_speed_label', this.value)">
+                <p class="sub_setting">Position of Origin: <span class="slider_label" id="history_pos_label"></span
+                        class="slider_label"></p><input id="history_pos" class="slider" type="range" min="0" max="100"
+                    oninput="updateHistoryPos(parseFloat(this.value/100));updateSliderLabel('history_pos_label', this.value)">
+                <p class="sub_setting">Size of Origin: <span class="slider_label" id="history_size_label"></span
+                        class="slider_label"></p><input id="history_size" class="slider" type="range" min="0" max="100"
+                    oninput="updateHistorySize(parseFloat(this.value/100));updateSliderLabel('history_size_label', this.value)">
             </div>
 
             <p><input id="music_settings_toggle" class="checkbox" type="checkbox"
                     oninput="toggleMusicSettings(this.checked)">Music Sync</p>
             <div id="music_settings">
-                <p class="sub_setting">Smoothing (samples)</p><input id="music_smooth" class="slider" type="range"
-                    min="1" max="20" oninput="updateMusicSmooth(parseInt(this.value))">
-                <p class="sub_setting">Calib. Window (sec)</p><input id="music_calibration_sec" class="slider"
-                    type="range" min="1" max="20" oninput="updateMusicCalibrationSec(parseInt(this.value))">
+                <p class="sub_setting">Smoothing (samples): <span class="slider_label" id="music_smooth_label"></span
+                        class="slider_label"></p><input id="music_smooth" class="slider" type="range" min="1" max="20"
+                    oninput="updateMusicSmooth(parseInt(this.value));updateSliderLabel('music_smooth_label', this.value)">
+                <p class="sub_setting">Calib. Window (sec): <span class="slider_label"
+                        id="music_calibration_sec_label"></span class="slider_label"></p><input
+                    id="music_calibration_sec" class="slider" type="range" min="1" max="20"
+                    oninput="updateMusicCalibrationSec(parseInt(this.value));updateSliderLabel('music_calibration_sec_label', this.value)">
 
                 <p><input id="music_brightness_enable" class="checkbox" type="checkbox"
                         oninput="toggleMusicBrightness(this.checked)">Music Sync: Brightness</p>
                 <div id="music_brightness_settings">
-                    <p class="sub_setting">Brightness Min</p><input id="music_brightness_min" class="slider"
-                        type="range" min="0" max="100" oninput="updateMusicBrightnessMin(parseFloat(this.value/100))">
-                    <p class="sub_setting">Brightness Max</p><input id="music_brightness_max" class="slider"
-                        type="range" min="0" max="100" oninput="updateMusicBrightnessMax(parseFloat(this.value/100))">
+                    <p class="sub_setting">Brightness Min: <span class="slider_label"
+                            id="music_brightness_min_label"></span class="slider_label"></p><input
+                        id="music_brightness_min" class="slider" type="range" min="0" max="100"
+                        oninput="updateMusicBrightnessMin(parseFloat(this.value/100));updateSliderLabel('music_brightness_min_label', this.value)">
+                    <p class="sub_setting">Brightness Max: <span class="slider_label"
+                            id="music_brightness_max_label"></span class="slider_label"></p><input
+                        id="music_brightness_max" class="slider" type="range" min="0" max="100"
+                        oninput="updateMusicBrightnessMax(parseFloat(this.value/100));updateSliderLabel('music_brightness_max_label', this.value)">
                 </div>
 
                 <p><input id="music_color_enable" class="checkbox" type="checkbox"
                         oninput="toggleMusicColor(this.checked)">Music Sync: Color</p>
                 <div id="music_color_settings">
-                    <p class="sub_setting">Color Switch Debounce (samples)</p><input id="music_color_debounce"
-                        class="slider" type="range" min="0" max="20"
-                        oninput="updateMusicColorDebounce(parseInt(this.value))">
-                    <p class="sub_setting">Color Switch Threshold</p><input id="music_color_thresh" class="slider"
-                        type="range" min="0" max="100" oninput="updateMusicColorThresh(parseFloat(this.value/100))">
+                    <p class="sub_setting">Color Switch Debounce (samples): <span class="slider_label"
+                            id="music_color_debounce_label"></span class="slider_label"></p>
+                    <input id="music_color_debounce" class="slider" type="range" min="0" max="20"
+                        oninput="updateMusicColorDebounce(parseInt(this.value));updateSliderLabel('music_color_debounce_label', this.value)">
+                    <p class="sub_setting">Color Switch Threshold: <span class="slider_label"
+                            id="music_color_thresh_label"></span class="slider_label"></p><input id="music_color_thresh"
+                        class="slider" type="range" min="0" max="100"
+                        oninput="updateMusicColorThresh(parseFloat(this.value/100));updateSliderLabel('music_color_thresh_label', this.value)">
                 </div>
             </div>
         </div>
@@ -193,21 +213,37 @@
 
         // sliders
         document.getElementById("saturation").value = parseInt(settings["saturation"] * 100);
+        updateSliderLabel("saturation_label", document.getElementById("saturation").value);
         document.getElementById("value").value = parseInt(settings["value"] * 100);
+        updateSliderLabel("value_label", document.getElementById("value").value);
         document.getElementById("boundary").value = settings["boundary"];
+        updateSliderLabel("boundary_label", document.getElementById("boundary").value);
         document.getElementById("arrangement").value = settings["arrangement"];
+        updateSliderLabel("arrangement_label", document.getElementById("arrangement").value);
         document.getElementById("speed").value = parseInt(speedToValue(settings["speed"]) * 100);
+        updateSliderLabel("speed_label", document.getElementById("speed").value);
         document.getElementById("direction").value = settings["direction"];
-        document.getElementById("pos").value = settings["pos"] * 100;
+        updateSliderLabel("direction_label", document.getElementById("direction").value);
+        document.getElementById("pos").value = parseInt(settings["pos"] * 100);
+        updateSliderLabel("pos_label", document.getElementById("pos").value);
         document.getElementById("history_speed").value = settings["history_speed"]
+        updateSliderLabel("history_speed_label", document.getElementById("history_speed").value);
         document.getElementById("history_pos").value = parseInt(settings["history_pos"] * 100);
+        updateSliderLabel("history_pos_label", document.getElementById("history_pos").value);
         document.getElementById("history_size").value = parseInt(settings["history_size"] * 100);
+        updateSliderLabel("history_size_label", document.getElementById("history_size").value);
         document.getElementById("music_smooth").value = settings["music_smooth"];
+        updateSliderLabel("music_smooth_label", document.getElementById("music_smooth").value);
         document.getElementById("music_calibration_sec").value = settings["music_calibration_sec"];
+        updateSliderLabel("music_calibration_sec_label", document.getElementById("music_calibration_sec").value);
         document.getElementById("music_brightness_min").value = parseInt(settings["music_brightness_min"] * 100);
+        updateSliderLabel("music_brightness_min_label", document.getElementById("music_brightness_min").value);
         document.getElementById("music_brightness_max").value = parseInt(settings["music_brightness_max"] * 100);
+        updateSliderLabel("music_brightness_max_label", document.getElementById("music_brightness_max").value);
         document.getElementById("music_color_debounce").value = settings["music_color_debounce"];
+        updateSliderLabel("music_color_debounce_label", document.getElementById("music_color_debounce").value);
         document.getElementById("music_color_thresh").value = parseInt(settings["music_color_thresh"] * 100);
+        updateSliderLabel("music_color_thresh_label", document.getElementById("music_color_thresh").value);
     }
 
     function updatePower(p) {
@@ -330,6 +366,10 @@
         }
         req.open(type, url, true);
         req.send(data)
+    }
+
+    function updateSliderLabel(labelId, value) {
+        document.getElementById(labelId).innerHTML = value;
     }
 
 
@@ -583,6 +623,7 @@
 
         --slider-fill: var(--mid-grey-1);
         --slider-thumb: var(--light-accent-2);
+        --slider-label: var(--light-accent-2);
 
         --checkbox-off-fill: var(--light-accent-2-fade);
         --checkbox-off-border: var(--light-accent-2);
@@ -649,6 +690,12 @@
         cursor: pointer;
     }
 
+    .slider_label {
+        font-style: italic;
+        font-size: 16px;
+        color: var(--slider-label)
+    }
+
     button,
     .button-1 {
         background-color: var(--button-1-fill);
@@ -693,7 +740,11 @@
     .checkbox:active,
     .checkbox:checked:active,
     .checkbox:focus,
-    .checkbox:checked:focus {
+    .checkbox:checked:focus,
+    button:active,
+    button:focus,
+    .slider:active,
+    .slider:focus {
         box-shadow: none;
         outline: 0;
     }

@@ -93,6 +93,7 @@ class Strip:
             self.history_enable = False
             self.history_speed = 1                          # num of pixels to update each frame
             self.history_pos = 0                            # float 0 - 1, position of history playback
+            self.history_size = 0                           # float 0 - 1, size of history origin playback
 
             self.music_smooth = 5                           # int, # of samples
             self.music_calibration_sec = 5                  # float, # of seconds
@@ -262,6 +263,14 @@ class Strip:
                 self.direction = settings["direction"]
             if "pos" in settings:
                 self.pos = settings["pos"]
+            if "history_enable" in settings:
+                self.history_enable = settings["history_enable"]
+            if "history_speed" in settings:
+                self.history_speed = settings["history_speed"]
+            if "history_pos" in settings:
+                self.history_pos = settings["history_pos"]
+            if "history_size" in settings:
+                self.history_size = settings["history_size"]
             if "music_smooth" in settings:
                 self.music_smooth = settings["music_smooth"]
             if "music_calibration_sec" in settings:
@@ -282,12 +291,6 @@ class Strip:
                 self.music_color_debounce = settings["music_color_debounce"]
             if "music_color_thresh" in settings:
                 self.music_color_thresh = settings["music_color_thresh"]
-            if "history_enable" in settings:
-                self.history_enable = settings["history_enable"]
-            if "history_speed" in settings:
-                self.history_speed = settings["history_speed"]
-            if "history_pos" in settings:
-                self.history_pos = settings["history_pos"]
 
     def get_settings(self):
         settings = {}
@@ -300,6 +303,10 @@ class Strip:
         settings["speed"] = self.speed
         settings["direction"] = self.direction
         settings["pos"] = self.pos
+        settings["history_enable"] = self.history_enable
+        settings["history_speed"] = self.history_speed
+        settings["history_pos"] = self.history_pos
+        settings["history_size"] = self.history_size
         settings["music_smooth"] = self.music_smooth
         settings["music_calibration_sec"] = self.music_calibration_sec
         settings["music_brightness_enable"] = self.music_brightness_enable
@@ -310,9 +317,6 @@ class Strip:
         settings["music_color_enable"] = self.music_color_enable
         settings["music_color_debounce"] = self.music_color_debounce
         settings["music_color_thresh"] = self.music_color_thresh
-        settings["history_enable"] = self.history_enable
-        settings["history_speed"] = self.history_speed
-        settings["history_pos"] = self.history_pos
         return settings
 
 if __name__ == '__main__':

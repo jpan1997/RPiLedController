@@ -1,14 +1,17 @@
 import json
+import presets
 import SimpleHTTPServer
 import SocketServer
 import sys
+import threading
 
 # https://stackoverflow.com/questions/21631799/how-can-i-pass-parameters-to-a-requesthandler
 # https://stackoverflow.com/questions/9698614/super-raises-typeerror-must-be-type-not-classobj-for-new-style-class
-def make_handler(strip):
+def make_handler(strip, presets_manager):
     class CustomHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         def __init__(self, *args, **kwargs):
             self.strip = strip
+            self.presets_manager = presets_manager
             SimpleHTTPServer.SimpleHTTPRequestHandler.__init__(self, *args, **kwargs)
             
         def do_GET(self):
@@ -46,15 +49,29 @@ def make_handler(strip):
             
             if "get_settings" in data:
                 settings = self.strip.get_settings()
+                settings["presets"] = presets_manager.get_presets_list()
                 self.wfile.write(json.dumps(settings))
 
+            # preset requests
+            if "add_preset" in data:
+                presets_manager.add_preset(data["add_preset"])
+
+            if "load_preset" in data:
+                presets_manager.load_preset(data["load_preset"])
+
+            if "save_preset" in data:
+                presets_manager.save_preset(data["save_preset"])
+
+            if "remove_preset" in data:
+                presets_manager.remove_preset(data["remove_preset"])
             
     return CustomHandler
 
     
 class Server:
     def __init__(self, port, strip):
-        self.httpd = SocketServer.TCPServer(("", port), make_handler(strip))
+        presets_manager = presets.PresetsManager(strip)
+        self.httpd = SocketServer.TCPServer(("", port), make_handler(strip, presets_manager))
 
     def run(self):
         print("Serving on port: " + str(self.httpd.server_address[1]))

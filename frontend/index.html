@@ -20,13 +20,15 @@
             <p>RESET</p>
         </button>
         <p>Presets <button class="button-1" onclick="handleAddPreset()">+</button></p>
-        <div id="presets_list"></div>
+        <div id="presets_list">
+            <table id="presets_table"></table>
+        </div>
         <p><input id="power" class="checkbox" type="checkbox" oninput="togglePower(this.checked)">Power</p>
         <div id="all_settings">
             <p>Color <button class="button-1" onclick="handleAddColor()">+</button></p>
             <ul id="color_list" style="list-style: none; padding: 0; margin: 0;"></ul>
-            <p>Saturation: <span class="slider_label" id="saturation_label"></span class="slider_label"></p><input
-                id="saturation" class="slider" type="range" min="0" max="100"
+            <p>Saturation: <span class="slider_label" id="saturation_label"></span class="slider_label"></p>
+            <input id="saturation" class="slider" type="range" min="0" max="100"
                 oninput="updateSaturation(parseFloat(this.value/100));updateSliderLabel('saturation_label', this.value)">
             <p>Value: <span class="slider_label" id="value_label"></span class="slider_label"></p><input id="value"
                 class="slider" type="range" min="0" max="100"
@@ -34,17 +36,18 @@
             <p>Boundary: <span class="slider_label" id="boundary_label"></span class="slider_label"></p><input
                 id="boundary" class="slider" type="range" min="0" max="1"
                 oninput="updateBoundary(parseInt(this.value));updateSliderLabel('boundary_label', this.value)">
-            <p>Arrangement: <span class="slider_label" id="arrangement_label"></span class="slider_label"></p><input
-                id="arrangement" class="slider" type="range" min="0" max="1"
+            <p>Arrangement: <span class="slider_label" id="arrangement_label"></span class="slider_label"></p>
+            <input id="arrangement" class="slider" type="range" min="0" max="1"
                 oninput="updateArrangement(parseInt(this.value));updateSliderLabel('arrangement_label', this.value)">
-            <p>Animation Speed: <span class="slider_label" id="speed_label"></span class="slider_label"></p><input
-                id="speed" class="slider" type="range" min="0" max="100"
+            <p>Animation Speed: <span class="slider_label" id="speed_label"></span class="slider_label"></p>
+            <input id="speed" class="slider" type="range" min="0" max="100"
                 oninput="updateSpeed(parseFloat(this.value/100));updateSliderLabel('speed_label', this.value)">
-            <p>Animation Direction: <span class="slider_label" id="direction_label"></span class="slider_label"></p>
+            <p>Animation Direction: <span class="slider_label" id="direction_label"></span class="slider_label">
+            </p>
             <input id="direction" class="slider" type="range" min="-1" max="1"
                 oninput="updateDirection(parseInt(this.value));updateSliderLabel('direction_label', this.value)">
-            <p>Animation Position: <span class="slider_label" id="pos_label"></span class="slider_label"></p><input
-                id="pos" class="slider" type="range" min="0" max="100"
+            <p>Animation Position: <span class="slider_label" id="pos_label"></span class="slider_label"></p>
+            <input id="pos" class="slider" type="range" min="0" max="100"
                 oninput="updatePos(parseFloat(this.value/100));updateSliderLabel('pos_label', this.value)">
 
             <p><input id="history_enable" class="checkbox" type="checkbox"
@@ -199,7 +202,7 @@
         toggleMusicSettings(musicEnabled, false);
 
         // presets
-        document.getElementById("presets_list").innerHTML = ""; // remove all children
+        document.getElementById("presets_table").innerHTML = ""; // remove all children
         for (i = 0; i < settings["presets"].length; i++) {
             addPresetElement(settings["presets"][i]);
         }
@@ -458,39 +461,37 @@
     // preset
 
     function addPresetElement(presetName) {
-        var presetsList = document.getElementById("presets_list");
+        var presetsTable = document.getElementById("presets_table");
 
-        var presetItem = document.createElement("p");
+        var presetsRow = presetsTable.insertRow(presetsTable.rows.length);
+        var loadButtonCell = presetsRow.insertCell(presetsRow.cells.length);
+        var saveButtonCell = presetsRow.insertCell(presetsRow.cells.length);
+        var removeButtonCell = presetsRow.insertCell(presetsRow.cells.length);
+        var presetNameCell = presetsRow.insertCell(presetsRow.cells.length);
 
         var loadButton = document.createElement("button");
         loadButton.appendChild(document.createTextNode("LOAD"));
         loadButton.className = "button-2";
-        loadButton.onclick = function () { handleLoadPreset(presetName); }
+        loadButton.onclick = function () { handleLoadPreset(presetName); };
 
         var saveButton = document.createElement("button");
         saveButton.appendChild(document.createTextNode("SAVE"));
         saveButton.className = "button-2";
-        saveButton.onclick = function () { handleSavePreset(presetName); }
+        saveButton.onclick = function () { handleSavePreset(presetName); };
 
         var removeButton = document.createElement("button");
         removeButton.appendChild(document.createTextNode("-"));
-        removeButton.style.marginRight = "10px";
-        removeButton.className = "button-1";
-        removeButton.onclick = function () { handleRemovePreset(presetsList, presetItem, presetName); }
+        removeButton.classList.add("presets_remove_button");
+        removeButton.classList.add("button-1");
+        removeButton.onclick = function () { handleRemovePreset(presetName); };
 
-        var presetNameNode = document.createTextNode(presetName);
+        var presetNameSpan = document.createElement("span");
+        presetNameSpan.innerHTML = presetName;
 
-        presetItem.appendChild(loadButton);
-        presetItem.appendChild(saveButton);
-        presetItem.appendChild(removeButton);
-        presetItem.appendChild(presetNameNode);
-
-        presetsList.appendChild(presetItem);
-    }
-
-    // unused rip
-    function removePresetElement(presetsList, presetItem) {
-        presetsList.removeChild(presetItem);
+        loadButtonCell.appendChild(loadButton);
+        saveButtonCell.appendChild(saveButton);
+        removeButtonCell.appendChild(removeButton);
+        presetNameCell.appendChild(presetNameSpan);
     }
 
     function handleAddPreset() {
@@ -506,13 +507,15 @@
     function handleLoadPreset(presetName) {
         updateSettings({ "load_preset": presetName });
         getSettings();
+        alert("Loaded preset: " + presetName);
     }
 
     function handleSavePreset(presetName) {
         updateSettings({ "save_preset": presetName });
+        alert("Saved preset: " + presetName);
     }
 
-    function handleRemovePreset(presetList, presetItem, presetName) {
+    function handleRemovePreset(presetName) {
         updateSettings({ "remove_preset": presetName });
         getSettings();
     }
@@ -787,7 +790,7 @@
 
     #presets_list {
         padding: 5px 5px;
-        max-height: 132px;
+        max-height: 120px;
         width: 95%;
         max-width: 500px;
         overflow-y: scroll;
@@ -797,16 +800,27 @@
         background-color: var(--presets-fill);
     }
 
-    #presets_list p {
-        padding: 5px 2px;
-        font-size: 17px;
-        font-style: italic;
+    #presets_table {
+        border-collapse: collapse;
     }
 
-    #presets_list p button {
-        font-style: normal;
-        margin: 0px 3px;
+    #presets_table td {
+        padding: 2px;
+    }
+
+    #presets_table button {
         font-size: 13px;
         padding: 8px 18px;
+    }
+
+    #presets_table #presets_remove_button {
+        font-size: 18px;
+        padding: 5px 18px;
+    }
+
+    #presets_table span {
+        font-size: 17px;
+        font-style: italic;
+        margin-left: 3px;
     }
 </style>
